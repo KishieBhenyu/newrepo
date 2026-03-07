@@ -34,3 +34,8 @@ app.listen(port, () => {
 app.get("/", function(req, res) {
   res.render("index", { title: "Home" })
 })
+
+app.set("view engine", "ejs")
+
+const staticRoutes = require("./routes/static")
+app.use("/", staticRoutes)

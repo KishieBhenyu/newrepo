@@ -1,5 +1,6 @@
 const express = require('express');
 const router = express.Router();
+app.set("view engine", "ejs")
 
 // View Engine and Templates
 app.set("view engine", "ejs")
