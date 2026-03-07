@@ -1,7 +1,7 @@
 /* ******************************************
- * This server.js file is the primary file of the 
- * application. It is used to control the project.
+ * Primary server file
  *******************************************/
+
 /* ***********************
  * Require Statements
  *************************/
@@ -9,33 +9,34 @@ const express = require("express")
 const expressLayouts = require("express-ejs-layouts")
 const env = require("dotenv").config()
 const app = express()
-const static = require("./routes/static")
+const staticRoutes = require("./routes/static")
+
+/* ***********************
+ * View Engine
+ *************************/
+app.use(expressLayouts)
+app.set("view engine", "ejs")
+app.set("layout", "./layouts/layout") // layout file
+
+/* ***********************
+ * Static Files
+ *************************/
+app.use(express.static("public"))
 
 /* ***********************
  * Routes
  *************************/
-app.use(static)
+app.use("/", staticRoutes)
 
 /* ***********************
  * Local Server Information
- * Values from .env (environment) file
  *************************/
-const port = process.env.PORT
-const host = process.env.HOST
+const port = process.env.PORT || 3000
+const host = process.env.HOST || "localhost"
 
 /* ***********************
- * Log statement to confirm server operation
+ * Start Server
  *************************/
 app.listen(port, () => {
-  console.log(`app listening on ${host}:${port}`)
+  console.log(`App listening on http://${host}:${port}`)
 })
-
-//index route
-app.get("/", function(req, res) {
-  res.render("index", { title: "Home" })
-})
-
-app.set("view engine", "ejs")
-
-const staticRoutes = require("./routes/static")
-app.use("/", staticRoutes)
